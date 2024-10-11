@@ -3,7 +3,9 @@ import { differenceInYears } from 'date-fns';
 
 @Exclude()
 export class ResponseDto {
-  @Transform(({ obj }) => differenceInYears(Date.now(), obj.birthday))
+  @Transform(({ obj }: { obj: ResponseDto }) =>
+    differenceInYears(Date.now(), obj.birthday),
+  )
   @Expose()
   age: number;
 
@@ -12,16 +14,15 @@ export class ResponseDto {
 
   @Expose({
     groups: ['email', 'sms'],
-    since: 4
+    since: 4,
   })
-  @Transform((params) => params.obj.fullName.split(' ')[0], {
+  @Transform(({ obj }: { obj: ResponseDto }) => obj.fullName.split(' ')[0], {
     groups: ['sms', 'email'],
-
   })
   nickname: string;
 
   @Expose({
-    groups: ['login']
+    groups: ['login'],
   })
   birthday: Date;
 

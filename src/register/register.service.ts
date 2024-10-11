@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { instanceToPlain } from 'class-transformer';
+
 import { CreateRegisterDto } from './dto/create-register.dto';
 import { UpdateRegisterDto } from './dto/update-register.dto';
-import { instanceToPlain } from 'class-transformer';
 
 @Injectable()
 export class RegisterService {
@@ -18,7 +19,7 @@ export class RegisterService {
   }
 
   update(id: number, updateRegisterDto: UpdateRegisterDto) {
-    return `This action updates a #${id} register`;
+    return `This action updates a #${id} register with ${JSON.stringify(updateRegisterDto)}`;
   }
 
   remove(id: number) {

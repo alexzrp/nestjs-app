@@ -7,11 +7,12 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { RegisterService } from './register.service';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
+
 import { CreateRegisterDto } from './dto/create-register.dto';
-import { UpdateRegisterDto } from './dto/update-register.dto';
 import { ResponseDto } from './dto/response.dto';
-import { instanceToInstance, instanceToPlain, plainToInstance } from 'class-transformer';
+import { UpdateRegisterDto } from './dto/update-register.dto';
+import { RegisterService } from './register.service';
 
 @Controller('register')
 export class RegisterController {
@@ -22,12 +23,13 @@ export class RegisterController {
     const register = this.registerService.create(createRegisterDto);
     //console.log(register);
     const response = plainToInstance(ResponseDto, register);
-    console.log(instanceToPlain(response, {
-      groups: ['email'],
-      version: 4,
-    }));
+    console.log(
+      instanceToPlain(response, {
+        groups: ['email'],
+        version: 4,
+      }),
+    );
     return response;
-    
   }
 
   @Get()

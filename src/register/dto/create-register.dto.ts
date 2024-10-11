@@ -1,17 +1,7 @@
-import { Exclude, Expose, Transform, Type } from 'class-transformer';
-import {
-  IsDate,
-  IsDateString,
-  IsEnum,
-  IsString,
-  MaxDate,
-  MaxLength,
-  MinDate,
-  MinLength,
-  Validate,
-} from 'class-validator';
-import { subYears } from 'date-fns';
 import { ApiHideProperty } from '@nestjs/swagger';
+import { Exclude, Expose, Transform } from 'class-transformer';
+import { IsDate, IsEnum, IsString, MaxDate, MaxLength } from 'class-validator';
+import { subYears } from 'date-fns';
 
 enum ECategory {
   PERSONAL = 'PERSONAL',
@@ -44,11 +34,14 @@ export class CreateRegisterDto {
     toPlainOnly: true,
   })
   @ApiHideProperty()
-  @Transform(({ obj }) => `${obj.firstName} ${obj.lastName}`, {})
+  @Transform(
+    ({ obj }: { obj: CreateRegisterDto }) => `${obj.firstName} ${obj.lastName}`,
+    {},
+  )
   fullName: string;
 
   @IsDate()
-  @MaxDate(() => subYears(Date.now(), 18), {
+  @MaxDate(() => subYears(new Date(), 18), {
     message: 'birthday is too close',
   })
   @Expose()

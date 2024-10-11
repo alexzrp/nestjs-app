@@ -1,0 +1,8 @@
+/old
+/coverage
+/scripts
+/bin/deploy.js
+/dist
+.eslintrc.*
+/documentation
+/release.config.js
